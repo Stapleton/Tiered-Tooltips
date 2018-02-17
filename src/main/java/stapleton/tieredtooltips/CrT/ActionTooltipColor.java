@@ -16,9 +16,18 @@ public class ActionTooltipColor implements IAction {
     public ActionTooltipColor(String stage, String background, String borderStart, String borderEnd) {
 
         this.stage = stage;
-        this.background = "0x" + background;
-        this.borderStart = "0x" + borderStart;
-        this.borderEnd = "0x" + borderEnd;
+
+        if (background.length() == 6) this.background = "0xf0" + background;
+        else if (background.length() == 8) this.background = "0x" + background;
+        else throw new IllegalArgumentException("backgroundColour value must be either 6 characters long (RGB Hex format) or 8 characters long (ARGB Hex format)");
+
+        if (borderStart.length() == 6) this.borderStart = "0x50" + borderStart;
+        else if (borderStart.length() == 8) this.borderStart = "0x" + borderStart;
+        else throw new IllegalArgumentException("borderStart value must be either 6 characters long (RGB Hex format) or 8 characters long (ARGB Hex format)");
+
+        if (borderEnd.length() == 6) this.borderEnd = "0x50" + borderEnd;
+        else if (borderEnd.length() == 8) this.borderEnd = "0x" + borderEnd;
+        else throw new IllegalArgumentException("borderEnd value must be either 6 characters long (RGB Hex format) or 8 characters long (ARGB Hex format)");
     }
 
     @Override
