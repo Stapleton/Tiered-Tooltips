@@ -2,13 +2,13 @@
 {
   "modid": "tieredtooltips",
   "name": "Tiered Tooltips",
-  "description": "Example placeholder mod.",
+  "description": "Allows colouring Item tooltips based on what GameStage the item is apart of.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/OscarXcore/Tiered-Tooltips",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Stapleton"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
