@@ -1,64 +1,52 @@
 package stapleton.tieredtooltips;
 
-import crafttweaker.annotations.ZenRegister;
 import net.darkhax.itemstages.ItemStages;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.*;
 
-@ZenRegister
-@ZenClass("mods.TieredTooltips")
-@Mod(modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, clientSideOnly = true)
+@Mod(modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, clientSideOnly = true, name = Reference.MOD_NAME)
 public class TieredTooltips {
 
-    public static Map<String, Map<String, String>> colouredStages = new HashMap<>();
-    private String itemStage, stage, background, borderStart, borderEnd;
+    public static final Map<String, Map<String, Long>> colouredStages = new HashMap<>();
+    private static String itemStage;
 
-    private static final Logger logger = new Logger("Tiered Tooltips");
+    public static final Logger logger = new Logger("Tiered Tooltips");
+
+    @Mod.Instance("Tiered Tooltips")
+    public static TieredTooltips instance;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @ZenMethod
-    public static void colourStage(String stage, String background, String borderStart, String borderEnd) {
-    }
-
-    public void addToMap(String stage, String background, String borderStart, String borderEnd) {
-        Map<String, String> values = new HashMap<>();
-        values.put("background", background);
-        values.put("borderStart", borderStart);
-        values.put("borderEnd", borderEnd);
-        colouredStages.put(stage, values);
-        logger.info("colourStage was called!");
+    @SubscribeEvent
+    public void onTooltip(ItemTooltipEvent event) {
+        itemStage = ItemStages.getStage(event.getItemStack());
     }
 
     @SubscribeEvent
-    public void onTooltip(RenderTooltipEvent event) {
-        this.itemStage = ItemStages.getStage(event.getStack());
-    }
+    public void onColor(RenderTooltipEvent.Color event) {
 
-    @SubscribeEvent
-    public void onColor(RenderTooltipEvent.Color color) {
-        if (colouredStages.containsKey(this.itemStage)) {
-            Map<String, String> values = colouredStages.get(this.itemStage);
-            color.setBackground((int) (long) Long.decode(values.get("background")));
-            color.setBorderStart((int) (long) Long.decode(values.get("borderStart")));
-            color.setBorderEnd((int) (long) Long.decode(values.get("borderEnd")));
-            logger.info("Has stage, setting tooltip colours.");
+        if (colouredStages.containsKey(itemStage)) {
+            Map<String, Long> values = colouredStages.get(itemStage);
+            event.setBackground((int) (long) values.get("background"));
+            event.setBorderStart((int) (long) values.get("borderStart"));
+            event.setBorderEnd((int) (long) values.get("borderEnd"));
+            //logger.info("Has stage, setting tooltip colours.");
         } else {
-            color.setBackground(color.getOriginalBackground());
-            color.setBorderStart(color.getOriginalBorderStart());
-            color.setBorderEnd(color.getOriginalBorderEnd());
-            logger.info("Does not have stage, setting default tooltip colours.");
-            logger.info(this.itemStage);
+            event.setBackground(event.getOriginalBackground());
+            event.setBorderStart(event.getOriginalBorderStart());
+            event.setBorderEnd(event.getOriginalBorderEnd());
+            //logger.info("Does not have stage, setting default tooltip colours.");
+            //logger.info(this.itemStage);
+            //logger.info(colouredStages);
         }
     }
 }
