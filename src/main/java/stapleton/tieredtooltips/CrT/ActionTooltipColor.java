@@ -1,6 +1,7 @@
-package stapleton.tieredtooltips;
+package stapleton.tieredtooltips.CrT;
 
 import crafttweaker.IAction;
+import stapleton.tieredtooltips.TieredTooltips;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,6 @@ public class ActionTooltipColor implements IAction {
     @Override
     public String describe() {
 
-        return "Applied a colour change to stage: " + this.stage;
+        return "Changed colour of stage: " + this.stage;
     }
 }

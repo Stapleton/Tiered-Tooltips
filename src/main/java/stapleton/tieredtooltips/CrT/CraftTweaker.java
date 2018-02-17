@@ -1,9 +1,10 @@
-package stapleton.tieredtooltips;
+package stapleton.tieredtooltips.CrT;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+import stapleton.tieredtooltips.CrT.ActionTooltipColor;
 
 @ZenRegister
 @ZenClass("mods.TieredTooltips")
