@@ -41,10 +41,18 @@ public class TieredTooltips {
         unlockedStages = event.getStageData().getUnlockedStages();
     }
 
+    private boolean shouldColor(String itemStage) {
+        boolean stageUnlocked = unlockedStages.contains(itemStage);
+        if (stageUnlocked && Config.respect) return true;
+        else if (stageUnlocked && !Config.respect) return true;
+        else if (!stageUnlocked && Config.respect) return false;
+        else return !stageUnlocked && !Config.respect;
+    }
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void tooltipColor(RenderTooltipEvent.Color event) {
         String itemStage = ItemStages.getStage(event.getStack());
-        if (itemStage != null && coloredStages.containsKey(itemStage) && unlockedStages.contains(itemStage)) {
+        if (itemStage != null && coloredStages.containsKey(itemStage) && shouldColor(itemStage)) {
             Map<String, Long> values = coloredStages.get(itemStage);
             event.setBackground((int) (long) values.get("background"));
             event.setBorderStart((int) (long) values.get("borderStart"));

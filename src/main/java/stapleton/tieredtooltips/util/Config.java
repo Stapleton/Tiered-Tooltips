@@ -29,7 +29,7 @@ public class Config {
     private static void initConfig(Configuration config) {
 
         config.addCustomCategoryComment(GENERAL, "General Configuration");
-        respect = config.getBoolean("RespectLockedStages", Configuration.CATEGORY_GENERAL, false, "If true, the tooltip coloring will have respect for locked stages. (Won't color the tooltip if the stage is not unlocked)");
+        respect = config.getBoolean("RespectLockedStages", Configuration.CATEGORY_GENERAL, true, "If false, the tooltip coloring will not have respect for locked stages. (Will still color the tooltip even if the stage is not unlocked.)");
         configVersion = config.getInt("Config Version", GENERAL, configVersion, configVersion, configVersion, "DO NOT CHANGE THIS!");
     }
 }
