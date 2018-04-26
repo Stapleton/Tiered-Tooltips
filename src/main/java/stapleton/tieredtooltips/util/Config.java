@@ -6,7 +6,7 @@ import stapleton.tieredtooltips.TieredTooltips;
 public class Config {
 
     public static boolean respect;
-    public static int configVersion = 1;
+    private static int configVersion = 1;
 
     private static final String GENERAL = "General";
 
@@ -29,7 +29,7 @@ public class Config {
     private static void initConfig(Configuration config) {
 
         config.addCustomCategoryComment(GENERAL, "General Configuration");
-        respect = config.getBoolean("RespectLockedStages", Configuration.CATEGORY_GENERAL, false, "If true, the tooltip colouring will have respect for locked stages. (Won't colour the tooltip if the stage is not unlocked)");
+        respect = config.getBoolean("RespectLockedStages", Configuration.CATEGORY_GENERAL, false, "If true, the tooltip coloring will have respect for locked stages. (Won't color the tooltip if the stage is not unlocked)");
         configVersion = config.getInt("Config Version", GENERAL, configVersion, configVersion, configVersion, "DO NOT CHANGE THIS!");
     }
 }

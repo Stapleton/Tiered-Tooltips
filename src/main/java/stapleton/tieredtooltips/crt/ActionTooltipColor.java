@@ -1,4 +1,4 @@
-package stapleton.tieredtooltips.CrT;
+package stapleton.tieredtooltips.crt;
 
 import crafttweaker.IAction;
 import stapleton.tieredtooltips.TieredTooltips;
@@ -19,7 +19,7 @@ public class ActionTooltipColor implements IAction {
 
         if (background.length() == 6) this.background = "0xf0" + background;
         else if (background.length() == 8) this.background = "0x" + background;
-        else throw new IllegalArgumentException("backgroundColour value must be either 6 characters long (RGB Hex format) or 8 characters long (ARGB Hex format)");
+        else throw new IllegalArgumentException("backgroundColor value must be either 6 characters long (RGB Hex format) or 8 characters long (ARGB Hex format)");
 
         if (borderStart.length() == 6) this.borderStart = "0x50" + borderStart;
         else if (borderStart.length() == 8) this.borderStart = "0x" + borderStart;
@@ -34,9 +34,9 @@ public class ActionTooltipColor implements IAction {
     public void apply() {
 
         if (this.stage.isEmpty()) throw new IllegalArgumentException("Empty stage name!");
-        if (this.background.isEmpty()) throw new IllegalArgumentException("Empty background colour!");
-        if (this.borderStart.isEmpty()) throw new IllegalArgumentException("Empty borderStart colour!");
-        if (this.borderEnd.isEmpty()) throw new IllegalArgumentException("Empty borderEnd colour!");
+        if (this.background.isEmpty()) throw new IllegalArgumentException("Empty background color!");
+        if (this.borderStart.isEmpty()) throw new IllegalArgumentException("Empty borderStart color!");
+        if (this.borderEnd.isEmpty()) throw new IllegalArgumentException("Empty borderEnd color!");
 
         Map<String, Long> values = new HashMap<>();
 
@@ -44,12 +44,12 @@ public class ActionTooltipColor implements IAction {
         values.put("borderStart", Long.decode(this.borderStart));
         values.put("borderEnd", Long.decode(this.borderEnd));
 
-        TieredTooltips.colouredStages.put(stage, values);
+        TieredTooltips.coloredStages.put(stage, values);
     }
 
     @Override
     public String describe() {
 
-        return "Changed colour of stage: " + this.stage;
+        return "Changed color of stage: " + this.stage;
     }
 }

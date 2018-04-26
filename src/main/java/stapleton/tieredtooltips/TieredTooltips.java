@@ -5,9 +5,9 @@ import net.darkhax.itemstages.ItemStages;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import stapleton.tieredtooltips.util.Config;
 import stapleton.tieredtooltips.util.Logger;
@@ -18,8 +18,7 @@ import java.util.*;
 @Mod(modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, clientSideOnly = true, name = Reference.MOD_NAME)
 public class TieredTooltips {
 
-    public static final Map<String, Map<String, Long>> colouredStages = new HashMap<>();
-    private String itemStage;
+    public static final Map<String, Map<String, Long>> coloredStages = new HashMap<>();
     private Collection<String> unlockedStages;
 
     public static final Logger logger = new Logger("Tiered Tooltips");
@@ -37,27 +36,16 @@ public class TieredTooltips {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @SubscribeEvent
-    public void onTooltip(ItemTooltipEvent event) {
-        itemStage = ItemStages.getStage(event.getItemStack());
-    }
-
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onStageData(StageDataEvent event) {
         unlockedStages = event.getStageData().getUnlockedStages();
     }
 
-    @SubscribeEvent
-    public void onColor(RenderTooltipEvent.Color event) {
-        boolean stageUnlocked = unlockedStages.contains(itemStage);
-        if (stageUnlocked && Config.respect) tooltipColour(event);
-        if (stageUnlocked && !Config.respect) tooltipColour(event);
-        if (!stageUnlocked && !Config.respect) tooltipColour(event);
-    }
-
-    private void tooltipColour(RenderTooltipEvent.Color event) {
-        if (colouredStages.containsKey(itemStage)) {
-            Map<String, Long> values = colouredStages.get(itemStage);
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void tooltipColor(RenderTooltipEvent.Color event) {
+        String itemStage = ItemStages.getStage(event.getStack());
+        if (itemStage != null && coloredStages.containsKey(itemStage) && unlockedStages.contains(itemStage)) {
+            Map<String, Long> values = coloredStages.get(itemStage);
             event.setBackground((int) (long) values.get("background"));
             event.setBorderStart((int) (long) values.get("borderStart"));
             event.setBorderEnd((int) (long) values.get("borderEnd"));

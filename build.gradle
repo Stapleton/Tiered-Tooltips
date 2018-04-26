@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.0." + System.getenv("BUILD_NUMBER")
+version = "1.0.5 Hotfix 3"
 group = "stapleton.tieredtooltips" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TieredTooltips"
 
@@ -78,8 +78,6 @@ dependencies {
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:${version_gamestages}"
     deobfCompile "net.darkhax.itemstages:ItemStages-1.12.2:${version_itemstages}"
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_minetweaker}"
-    deobfProvided "mezz.jei:jei_1.12.2:${version_jei}:api"
-    runtime "mezz.jei:jei_1.12.2:${version_jei}"
 }
 
 processResources {

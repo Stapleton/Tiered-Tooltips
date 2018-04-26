@@ -2,7 +2,7 @@
 {
   "modid": "tieredtooltips",
   "name": "Tiered Tooltips",
-  "description": "Allows colouring Item tooltips based on what GameStage the item is apart of.",
+  "description": "Allows coloring of item tooltips based on what GameStage the item is restricted to.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/OscarXcore/Tiered-Tooltips",
