@@ -18,7 +18,7 @@ public class Config {
             config.load();
             initConfig(config);
         } catch (Exception e) {
-            TieredTooltips.logger.error("Unable to load config file!");
+            TieredTooltips.log("Unable to load config file!");
         } finally {
             if (config.hasChanged()) {
                 config.save();

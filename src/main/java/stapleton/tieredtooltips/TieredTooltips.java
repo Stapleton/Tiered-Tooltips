@@ -1,6 +1,6 @@
 package stapleton.tieredtooltips;
 
-import net.darkhax.gamestages.event.StageDataEvent;
+import net.darkhax.gamestages.event.StagesSyncedEvent;
 import net.darkhax.itemstages.ItemStages;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -9,8 +9,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import stapleton.tieredtooltips.util.Config;
-import stapleton.tieredtooltips.util.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -19,10 +21,15 @@ import java.util.*;
 public class TieredTooltips {
 
     public static final Map<String, Map<String, Long>> coloredStages = new HashMap<>();
+    public static Configuration config;
+
     private Collection<String> unlockedStages;
 
-    public static final Logger logger = new Logger("Tiered Tooltips");
-    public static Configuration config;
+    private static org.apache.logging.log4j.Logger logger;
+    private static Logger Logger() { return LogManager.getLogger(Reference.MOD_NAME); }
+    public static void log(Object obj) {
+        Logger().log(Level.INFO, obj);
+    }
 
     @Mod.Instance("Tiered Tooltips")
     public static TieredTooltips instance;
@@ -37,8 +44,8 @@ public class TieredTooltips {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onStageData(StageDataEvent event) {
-        unlockedStages = event.getStageData().getUnlockedStages();
+    public void onStageSync(StagesSyncedEvent event) {
+        unlockedStages = event.getData().getStages();
     }
 
     private boolean shouldColor(String itemStage) {
