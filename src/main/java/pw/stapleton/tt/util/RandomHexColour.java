@@ -13,7 +13,7 @@ public class RandomHexColour {
 
     private String generateColor(Random r) {
         int newColor = 0x1000000 + r.nextInt(0x1000000);
-        return "tt" + Integer.toHexString(newColor).substring(1, 7);
+        return "cc" + Integer.toHexString(newColor).substring(1, 7);
     }
 
     public Map<String, String> randomAll() {
